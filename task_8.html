@@ -1,0 +1,9 @@
+<head>
+<script>
+function degreeNumber(num, pow) {
+	if (pow <= 0) return 1;
+	else return num * degreeNumber(num, pow - 1)
+}
+document.writeln(degreeNumber(5, 3))
+</script>
+</head>

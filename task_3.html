@@ -1,0 +1,19 @@
+<head>
+<script>
+var a = 10;
+var b = 5;
+if (a >= 0 && b >= 0){
+	document.writeln(a, '-', b, '=', a - b);
+} 
+else if (a < 0 && b < 0){
+	document.writeln(a, '*', b, '=', a * b);
+}
+/* вывод результата при отрицательном значении b без "+-" */
+else if (b < 0){
+	document.writeln(a, b, '=', a + b);
+}
+else{
+	document.writeln(a, '+', b, '=', a + b);
+}
+</script>
+</head>
