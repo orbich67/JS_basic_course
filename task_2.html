@@ -1,0 +1,40 @@
+<head>
+<meta charset="utf-8">
+<script>
+var basket = [];
+var basket_price = 0;
+
+// добавляет товар в корзину
+function pushBasket(arg1, arg2){
+	basket.push({name: arg1, price: arg2});
+}
+
+// подсчет суммы товаров в корзине
+function countBasketPrice(arr){
+	for (i = 0; i < arr.length; i++){
+		basket_price += arr[i].price;
+	}
+	return basket_price.toFixed(2);
+}
+
+
+// вывод элементов корзины
+function viewBasket(arr){
+	for (el in arr){
+	document.writeln('<br>', arr[el].name, ': ',arr[el].price);
+	}
+}
+
+
+// наполняем корзину товарами
+pushBasket('апельсин', 29.50);
+pushBasket('банан', 13.00);
+pushBasket('груша', 15.45);
+pushBasket('яблоко', 9.98);
+
+
+viewBasket(basket);
+document.writeln('<br><br>Стоимость корзины: ', countBasketPrice(basket));
+
+</script>
+</head>

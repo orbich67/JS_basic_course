@@ -1,0 +1,28 @@
+<head>
+<script type="text/javascript">
+
+// 1 вариант (вывод в консоль)
+
+var totalRows = 20;
+for (i = 1; i <= totalRows; i++){
+	str_row = '';
+	for (j = 1; j <= i; j++){
+		str_row += 'x';
+	}
+	console.log(str_row)
+	//console.log('\n') - раскомментировать если нужна пустая строка между рядами
+}
+
+// 2 вариант (вывод на экран)
+
+var totalRows = 20;
+for (i = 1; i <= totalRows; i++){
+	for (j = 1; j <= i; j++){
+		document.writeln('x')
+	}
+	document.writeln('<br>')
+}
+
+
+</script>
+</head>
