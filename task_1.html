@@ -1,0 +1,57 @@
+<head>
+<meta charset="utf-8">
+<script>
+
+/*
+Число переводим в строку, чтобы с помощью индексов взять разряды из числа.
+Числа берем в обратном порядке.
+Проходим по объекту и присваиваем значения свойствам (значение переводим обратно в число).
+Порядок получается постоянный, т.к. ключи не числовые значения.
+Если в значении свойства NaN - свойство удаляется.
+*/
+
+function numInObject(number){
+
+	if (number < 0 || number > 999){
+		console.log('Число должно быть больше 0 и меньше 1000!');
+		return num_obj = {};
+	}
+
+	var num_obj = {
+		единицы: null,
+		десятки: null,
+		сотни: null
+	};
+
+	var number = String(number);
+
+	var idx = number.length - 1;
+	for (var el in num_obj){
+		num_obj[el] = +number[idx];
+		idx--;
+		if (isNaN(num_obj[el])){
+			delete num_obj[el];
+		}
+	}
+	return num_obj
+}
+
+// проверка работы функции
+var num = numInObject(245);
+for (var el in num){
+	console.log(el, ': ',num[el]);
+}
+console.log('\n');
+
+var num = numInObject(45);
+for (var el in num){
+	console.log(el, ': ',num[el]);
+}
+console.log('\n');
+
+var num = numInObject(5);
+for (var el in num){
+	console.log(el, ': ',num[el]);
+}
+</script>
+</head>

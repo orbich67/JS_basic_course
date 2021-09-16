@@ -1,0 +1,82 @@
+<head>
+<meta charset="utf-8">
+<script>
+
+var basket = {
+	goods: [],
+	sumBasket: function(){
+		var sum = 0;
+		for (var key in this.goods){
+			var elem = this.goods[key];
+			sum += elem.count * elem.price;
+		}
+		sum = +sum.toFixed(2);
+		return console.log('Сумма товаров в корзине:', sum);
+	},
+	vievBasket: function(){
+		for (var prod of this.goods){
+			console.log(prod);
+		}
+	},
+	countBasket: function(){
+		console.log('Товаров в корзине:', this.goods.length);
+	}
+};
+
+// создать объект (товар)
+function addProd(name, price, count){
+	var product = {
+		name: name,
+		price: price,
+		count: count
+	}
+	return product;
+}
+
+// добавить товар в корзину
+function addBasket(prod){
+	basket.goods.push(prod);
+}
+
+// удалить товар из корзины
+function clearBasket(product){
+	for (var prod in basket.goods){
+		var idx = basket.goods[prod].name.indexOf(product);
+		if (idx == 0){
+			basket.goods.splice(prod, 1);
+		}
+	}
+}
+
+
+// Проверка работы скрипта
+//
+// создаем объекты товаров и добавляем их в корзину
+addBasket(addProd('лимон', 13.50, 2));
+addBasket(addProd('груша', 8.90, 1));
+addBasket(addProd('апельсин', 10.50, 2));
+addBasket(addProd('яблоко', 6.50, 1));
+addBasket(addProd('вишня', 26.90, 2));
+
+// просмотр товаров в корзине
+basket.vievBasket();
+
+// подсчет товаров в корзине
+basket.countBasket();
+
+// подсчет суммы товаров в корзине
+basket.sumBasket();
+
+// удаляем товары из корзины
+clearBasket('апельсин');
+clearBasket('вишня');
+clearBasket('лимон');
+clearBasket('груша');
+clearBasket('яблоко');
+
+// проверяем товары в корзине
+basket.countBasket();
+
+
+</script>
+</head>
