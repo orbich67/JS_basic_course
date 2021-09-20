@@ -1,0 +1,97 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+</body>
+<script>
+
+function drawBoard() {
+
+	var table = document.createElement('table');
+	table.style='background: #DEB887; border-collapse: collapse; border: 2px solid black; font-weight: bold';
+	var letters = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', ''];
+	var figures = ['Пеш', 'Лад', 'Ко', 'Сл', 'Фер', 'Кор', 'Сл', 'Ко', 'Лад'];
+// буквы верх
+	var letter = document.createElement('tr');
+	for (var idx = 9; idx >= 0; idx--){
+		var td = document.createElement('td');
+		td.innerHTML = letters[idx];
+		letter.style='text-align: center; transform: rotate(180deg)';
+		letter.appendChild(td);
+	}
+
+	table.appendChild(letter);
+	
+	for (var i = 1; i <= 8; i++){
+		var tr = document.createElement('tr');
+// цифры лево
+		var number = document.createElement('td');
+		number.innerHTML = 9 - i;
+		tr.appendChild(number);
+
+
+		for (var j = 1; j <= 8; j++){
+
+			var td = document.createElement('td');
+
+			if (i % 2 == j % 2){
+				td.style='background: #DEB887; border: 2px solid black; height: 50px; width: 50px; text-align: center';
+			} else {
+				td.style='background: #A0522D; border: 2px solid black; height: 50px; width: 50px; text-align: center';
+			}
+
+			if (i == 2 && i % 2 == j % 2) {
+				td.innerHTML = figures[0];
+			} else if (i == 2){
+				td.innerHTML = figures[0];
+			}
+
+			if (i == 7 && i % 2 == j % 2) {
+				td.style='background: #DEB887; border: 2px solid black; height: 50px; width: 50px; text-align: center; color: white';
+				td.innerHTML = figures[0];
+			} else if (i == 7){
+				td.style='background: #A0522D; border: 2px solid black; height: 50px; width: 50px; text-align: center; color: white';
+				td.innerHTML = figures[0];
+			}
+
+			if (i == 1 && i % 2 == j % 2) {
+				td.innerHTML = figures[j];
+			} else if (i == 1){
+				td.innerHTML = figures[j];
+			}
+			if (i == 8 && i % 2 == j % 2) {
+				td.style='background: #DEB887; border: 2px solid black; height: 50px; width: 50px; text-align: center; color: white';
+				td.innerHTML = figures[j];
+			} else if (i == 8){
+				td.style='background: #A0522D; border: 2px solid black; height: 50px; width: 50px; text-align: center; color: white';
+				td.innerHTML = figures[j];
+			}
+			tr.appendChild(td);
+			}
+//	цифры право
+		number = document.createElement('td');
+		number.innerHTML = 9 - i;
+		number.style='text-align: center; font-weight: bold; transform: rotate(180deg)';
+		tr.appendChild(number);
+	
+		table.appendChild(tr);
+	}
+
+	var letter = document.createElement('tr');
+// буквы низ
+	for (var idx = 0; idx <= 9; idx++){
+		var td = document.createElement('td');
+		td.innerHTML = letters[idx];
+		letter.style='text-align: center';
+		letter.appendChild(td);
+	}
+
+	table.appendChild(letter);
+	document.body.appendChild(table);
+}
+
+drawBoard();
+
+</script>
+</html>

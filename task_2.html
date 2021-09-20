@@ -1,0 +1,90 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+</head>
+	<div id="basket"></div>
+
+<script>
+function init(){
+	var basket = document.getElementById("basket");
+	basket.innerHTML = Basket.countBasket() + ' ' + Basket.vievBasket();
+}
+
+var Basket = {
+	goods: [],
+	sumBasket: function(){
+		var sum = 0;
+		for (var key in this.goods){
+			var elem = this.goods[key];
+			sum += elem.count * elem.price;
+		}
+		sum = +sum;
+		return sum.toFixed(2);
+	},
+	vievBasket: function(){
+		var prod_basket = [];
+		for (var prod in this.goods){
+			prod_basket.push(this.goods[prod].name);
+		}
+		if (prod_basket.length){
+			return '(' + prod_basket + ')';
+		} else {
+			return '';
+		}
+		
+	},
+	countBasket: function(){
+		if (this.goods.length){
+			return 'В корзине ' + this.goods.length + ' товаров на сумму ' + this.sumBasket() + ' рублей';
+		} else {
+			return 'Корзина пуста...';
+		}
+	}
+}
+
+// создать объект (товар)
+function addProd(name, price, count){
+	var product = {
+		name: name,
+		price: price,
+		count: count
+	}
+	return product;
+}
+
+// добавить товар в корзину
+function addBasket(product){
+	Basket.goods.push(product);
+}
+
+// удалить товар из корзины
+function delBasket(product){
+	for (var prod in Basket.goods){
+		var idx = Basket.goods[prod].name.indexOf(product);
+		if (idx == 0){
+			Basket.goods.splice(prod, 1);
+		}
+	}
+}
+
+
+
+// Проверка работы скрипта
+//
+// создаем объекты товаров и добавляем их в корзину
+addBasket(addProd('лимон', 13.50, 2));
+addBasket(addProd('груша', 8.90, 1));
+addBasket(addProd('апельсин', 10.50, 2));
+addBasket(addProd('яблоко', 6.50, 1));
+addBasket(addProd('вишня', 26.90, 2));
+
+// удаляем все товары из корзины
+delBasket('апельсин');
+delBasket('вишня');
+delBasket('лимон');
+delBasket('груша');
+delBasket('яблоко');
+
+window.onload = init;
+</script>
+</head>
