@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#catalog{
+			display: flex;
+		}
+		.button {
+			display: block; 
+			width: 90px; 
+			background: yellow;
+			text-align: center;
+			font-size: larger;
+			cursor: pointer;
+		}
+		.button:hover {
+			background: #f1f1f1;
+		}
+	</style>
+</head>
+<body>
+	<div id="catalog"></div>
+	<div id="basket"></div>
+</body>
+<script>
+
+// создаем объект каталога
+function Item(product, image, description, price){
+	this.product = product;
+	this.image = image + '.png';
+	this.description = description;
+	this.price = price;
+}
+
+let catalList = [];
+
+// наполняем каталог
+catalList.push(new Item('Капуста', 'prod', 'Описание товара', 8.50));
+catalList.push(new Item('Яблоко', 'prod', 'Описание товара', 15));
+catalList.push(new Item('Груша', 'prod', 'Описание товара', 20));
+catalList.push(new Item('Картошка', 'prod', 'Описание товара', 7));
+
+
+// вывод каталога
+function drowItems(){
+	catalList.forEach(function(item, id){
+		drowItem(item, id);
+	})
+}
+
+
+const $catalog = document.querySelector('#catalog');
+
+function drowItem(item, id){
+	$catalog.insertAdjacentHTML('beforeEnd',
+	`<div id="item-${id}" class="prod_item">
+		<div class="item">
+			<div class="image"><img src="${item.image}" alt="${item.product}width="100" height="100"></div>
+			<div class="description"><b>${item.product}<br></b>${item.description}
+				<div class="price">Цена: 
+					<span>${item.price}</span> руб.
+				</div>
+			</div>
+		</div>
+		<div class="sale">
+			<p></p>
+			<div data-id="${id}" class="button">Купить</div>
+			<p></p>
+		</div>
+	</div>`);
+}
+
+drowItems(catalList);
+
+// создаем корзину
+let shoppingCart = [];
+
+let emptyBasket = '<br>Ваша корзина пуста...';
+
+function basketItem(product, price){
+	this.product = product;
+	this.price = price;
+}
+
+// получаем итоговую сумму
+function totalSumm(shoppingCart){
+	return shoppingCart.reduce(function(product, price){
+		return product + price.price;
+	}, 0);
+}
+
+//вывод корзины
+function drowTotal(shoppingCart){
+	const $basket = document.querySelector('#basket');
+	$basket.textContent = '';
+
+	if (shoppingCart == 0){
+		$basket.insertAdjacentHTML('beforeEnd', `<div class="total">${emptyBasket}</div>`);
+	} else {
+		$basket.insertAdjacentHTML('beforeEnd', `<div class="total">
+								<p>В корзине: ${shoppingCart.length}
+								товаров на сумму ${totalSumm(shoppingCart)} рублей. </p>
+								<a class="buy" href="#">Перейти к оплате</a>
+							</div>`);
+	}
+}
+
+drowTotal(shoppingCart);
+
+// событие - добавить объект в корзину
+$catalog.addEventListener('click', function(e){
+	if (e.target.className === 'button') {
+		const id = Number(e.target.getAttribute('data-id'));
+		const choice = catalList[id];
+		shoppingCart.push(new basketItem(choice.product, choice.price));
+		drowTotal(shoppingCart);
+	}
+})
+
+</script>
+</html>
