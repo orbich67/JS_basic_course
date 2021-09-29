@@ -1,0 +1,182 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: system-ui;
+}
+h1{
+	color: rgb(0, 0, 0);
+	width: 100%;
+	margin: 75px auto 0;
+	display: block;
+	text-align: center;
+	padding: 30px 0 0;
+}
+
+#wrapper{
+	display: flex;
+	width: 35%;
+	margin: 0 auto;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100vh;
+}
+
+#catalog{
+	display: flex;
+	width: 100%;
+	padding: 20px;
+	border: 1px dotted rgb(0, 0, 0);
+	flex-direction: column;
+	margin-bottom: 100px;
+	flex-grow: 1;
+}
+
+
+#basket{
+	max-width: 150%;
+	background: rgb(227 239 239 / 85%);
+	padding: 20px 50px 10px;
+	border-radius: 10px;
+}
+
+.total{
+	display: block;
+	width: 900px;
+	font-size: 2em;
+	justify-content: space-between;
+	align-items: center;
+	height: 100px;
+}
+
+.prod_item{
+	display: flex;
+	width: 100%;
+	margin: 5px 0;
+	box-shadow: 0 0 2px 2px grey;
+	justify-content: space-between;
+}
+
+.item{
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0 10px 50px;
+//	overflow: auto;
+}
+
+
+.image{
+	display: flex;
+	flex-wrap: wrap;
+	width: 110px;
+}
+
+.description{
+	display: flex;
+	height: 100%;
+	margin-left: 25px;
+}
+
+.price{
+	color: #2d11dc;
+	padding-left: 70px;
+	font-size: 25px;
+	margin-top: 100px;
+}
+
+.sale{
+	display: flex;
+	width: 150px;
+	flex-direction: column;
+	align-items: flex-end;
+	margin: 40px;
+}
+
+.button{
+	display: block;
+	width: 140%;
+	background: #2ecc37;
+	padding: 5px;
+	text-align: center;
+	font-size: larger;
+	cursor: pointer;
+}
+
+.button:hover{
+	background: #69ce82;
+}
+
+.buy{
+	color: black;
+	display: block;
+	padding: 3px 40px 9px;
+	border: 2px solid #000000;
+	cursor: pointer;
+	align-self: center;
+	border-radius: 25px;
+	font-weight: 500;
+	margin-top: 2px;
+}
+
+#buy_hidden{
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	width: 800px;
+	font-size: 1.5em;
+}
+
+.buy_hidden__delete{
+	margin-left: 5px;
+	font-size: .6em;
+}
+
+.buy_hidden__delete:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.confirmHtml, .messageHtml{
+	display: none;
+    flex-direction: column;
+    align-items: end;
+    width: 800px;
+    font-size: 1.5em;
+}
+
+.form{
+	width: 100%;
+}
+
+.buy_hidden__confirm{
+	width: 100%;
+	border-radius: 15px;
+	border: 1px solid lightslategray;
+	padding: 15px;
+	box-sizing: border-box;
+	margin: 10px 0px;
+}
+
+.orderDiv{
+	position: fixed;
+	display: flex;
+	top: 20%;
+	max-width: 70%;
+	flex-direction: column;
+	background: rgb(255 255 255 / 90%);
+	box-shadow: 0 0 12px 2px lightslategrey;
+	padding: 5px 40px 5px;
+	border-radius: 20px;
+}
+
+#close{
+	margin: 30px;
+	padding: 3px 40px 9px;
+	color: black;
+	border: 2px solid black;
+	cursor: pointer;
+	align-self: center;
+	border-radius: 25px;
+	font-weight: 500;
+	background: none;
+	font-size: 1.5em;
+}
