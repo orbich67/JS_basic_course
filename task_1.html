@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+<body>
+	<div id="wrapper">
+
+		<div id="basket"></div>
+		<div id="catalog"></div>
+		<div id="popup"></div>
+	</div>
+
+</body>
+<script>
+// создаем объект каталога
+function Item(product, image, description, price){
+	this.product = product;
+	this.image = './img/' + image + '.png';
+	this.description = description;
+	this.price = price;
+}
+
+let catalList = [];
+
+console.log(catalList);
+
+// наполняем каталог
+catalList.push(new Item('Капуста', 'image001', 'Описание товара', 8.50));
+catalList.push(new Item('Яблоко', 'image002', 'Описание товара', 15));
+catalList.push(new Item('Груша', 'image003', 'Описание товара', 20));
+catalList.push(new Item('Картошка', 'image004', 'Описание товара', 7));
+catalList.push(new Item('Арбуз', 'image005', 'Описание товара', 47));
+catalList.push(new Item('Дыня', 'image006', 'Описание товара', 53));
+
+
+// вывод каталога
+function drowItems(){
+	catalList.forEach(function(item, id){
+		drowItem(item, id);
+	})
+}
+
+const $catalog = document.querySelector('#catalog');
+
+function drowItem(item, id){
+	$catalog.insertAdjacentHTML('beforeEnd',
+	`<div id="item-${id}" class="prod_item">
+		<div class="item">
+			<div class="image"><img width="150" height="150" src="${item.image}" alt="${item.product}></div>
+			<div class="description"><b>${item.product}<br></b>${item.description}</div>
+		</div>
+			<div class="price">Цена: <span>${item.price}</span> руб.</div>
+		<div class="sale">
+			<p></p>
+			<div data-id="${id}" class="button">В корзину</div>
+			<p></p>
+		</div>
+	</div>`);
+}
+
+drowItems(catalList);
+
+// создаем корзину
+let shoppingCart = [];
+
+let emptyBasket = '<br>Ваша корзина пуста...';
+
+function basketItem(product, price){
+	this.product = product;
+	this.price = price;
+}
+
+// получаем итоговую сумму
+function totalSumm(shoppingCart){
+	return shoppingCart.reduce(function(sum, price){
+		return sum + price.price;
+	}, 0);
+}
+
+let $userAddr;
+let $userName;
+let $userMail;
+let $userMessage;
+
+// создаем отображение корзины
+function drowTotal(shoppingCart) {
+    const $basket = document.querySelector('#basket');
+    $basket.textContent = '';
+    
+    if (shoppingCart == 0) {
+        $basket.insertAdjacentHTML('beforeend', `<div class="total">${emptyBasket}</div>`);
+    } else {
+        $basket.insertAdjacentHTML('beforeend', 
+        `<div class="total">
+            <p>В корзине: ${shoppingCart.length} 
+            товаров на сумму ${totalSumm(shoppingCart)} рублей.</p>
+        </div>
+        <div id="buy_hidden">
+            <p class="buy" id="buy">Купить</p>
+        </div>
+        <div id="confirmHtml" class="confirmHtml">
+            <p class="buy" id="confirm">Далее</p>
+        </div>
+        <div id="messageHtml" class="confirmHtml">
+            <p class="buy" id="message">Завершить</p>
+        </div>
+        `);
+        
+        const $buy_hidden = document.getElementById('buy_hidden');
+        const $confirmHtml = document.getElementById('confirmHtml');
+        const $messageHtml = document.getElementById('messageHtml');
+        
+        function showChart(id=0) {
+            for (const el of shoppingCart) {
+                let chartHtml = `<div id="${id}" class="buy_hidden__item">${el.product} - ${el.price} руб.`;    
+                $buy_hidden.insertAdjacentHTML('afterbegin', `${chartHtml}
+                <span data-id="${id}" class="buy_hidden__delete"> (удалить)</span></div>`);
+                id++;
+            }
+        }
+        showChart();
+
+        const $buy = document.getElementById('buy');
+        const $confirm = document.getElementById('confirm');
+        const $message = document.getElementById('message');
+
+        $buy.addEventListener('click', function () {
+            $buy_hidden.style.display = 'none';
+            $confirmHtml.style.display = 'flex';
+            confirmDrow();
+        });
+
+
+        $confirm.addEventListener('click', function () {
+            $confirmHtml.style.display = 'none';
+            $messageHtml.style.display = 'flex';
+            messageDrow();
+	    let inputAddr = document.getElementById('addr');
+            $userAddr = inputAddr.value;
+        });
+
+        $message.addEventListener('click', function () {
+            $messageHtml.style.display = 'none';
+            shoppingCart = 0;
+	    let inputName = document.getElementById('name');
+            $userName = inputName.value;
+	    let inputMail = document.getElementById('email');
+            $userMail = inputMail.value;
+	    let inputMessage = document.getElementById('message');
+            $userMessage = inputMessage.value;
+            drowTotal(shoppingCart);
+            createConfirmWindow();
+        });
+
+        function confirmDrow() {
+            let confirmHtml = 
+            `<p class="buy_hidden__item">Адрес доставки:</p>
+            <input id="addr" type="text" class="buy_hidden__confirm" placeholder="Введите адрес доставки">`;
+            $confirmHtml.insertAdjacentHTML('afterbegin', confirmHtml);
+
+        }
+        function messageDrow() {
+            let messageHtml = 
+            `<p class="buy_hidden__item">Комментарий к заказу:</p>
+                <form class="form" action="#">
+                    <form action="#">
+                        <input id="name" type="text" class="buy_hidden__confirm" placeholder="Ваше имя"><br>
+                        <input id="email" type="text" class="buy_hidden__confirm" placeholder="Ваш email"><br>
+                        <textarea id="message" type="text" class="buy_hidden__confirm" cols="10" rows="3" placeholder="Ваш комментарий"></textarea><br>
+                    </form>
+                </form>`;
+            $messageHtml.insertAdjacentHTML('afterbegin', messageHtml);
+        }
+    }
+}
+
+drowTotal(shoppingCart);
+
+// событие - добавление объекта в корзину
+$catalog.addEventListener('click', function (e) {
+    if (e.target.className ==='button' ) {
+        const id = Number(e.target.getAttribute('data-id'));
+        const choice = catalList[id];
+        shoppingCart.push(new basketItem(choice.product, choice.price, choice.discount));
+        drowTotal(shoppingCart);
+    } 
+
+});
+ 
+
+// событие - удаление объекта из корзины
+const $basket = document.getElementById('basket');
+$basket.addEventListener('click', function (e) {
+    if (e.target.className === 'buy_hidden__delete') {
+        const this_id = Number(e.target.getAttribute('data-id'));
+        shoppingCart.splice(this_id, 1)
+        drowTotal(shoppingCart);
+    }
+})
+
+
+// окно для подверждения заказа
+const $wrapper = document.getElementById('wrapper');
+
+function createConfirmWindow() {
+    let $orderDiv = document.createElement('div');
+
+    $orderDiv.className = 'orderDiv';
+    $orderDiv.insertAdjacentHTML('beforeend', `
+    <h1>Ваш заказ на сумму ${totalSumm(shoppingCart)} руб. оформлен.</h1>
+    <h2>Получатель: ${$userName} (${$userMail})</h2>
+    <h2>Адрес доставки: ${$userAddr}</h2>
+    <h2>Комментарий к заказу: ${$userMessage}</h2>
+    <button id="close">Закрыть</button>`);
+    $wrapper.append($orderDiv);
+    
+    $orderDiv.addEventListener('click', function(e) {
+        if( e.target.tagName === 'BUTTON' ) {
+            $orderDiv.style.display = 'none';
+        }
+    });
+}
+
+</script>
+</html>
